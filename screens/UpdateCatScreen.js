@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Image } from 'react-native';
 // import CatsService from '../services/CatsService';
 
-export default function UpdateCatScreen() {
+export default function CreateCatScreen() {
   // const [cat, setCat] = React.useState('');
 
   return (

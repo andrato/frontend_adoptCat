@@ -1,21 +1,69 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Image } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Button, Image } from 'react-native';
 import CatsService from '../services/CatsService';
 
-export default function CatScreen() {
-  const [cat, setCat] = React.useState('');
+export default function CatScreen({route, navigation}) {
+    const [cat, setCat] = React.useState(route.params.cat);
 
-  return (
-    <View style={styles.container}>
-        <Text>On Cat Info</Text>
-    </View>
-  );
+    const handleUpdate = () => {
+        navigation.navigate({name: 'UpdateCat', params: {cat: cat}, merge: true}); 
+    }
+
+    const handleRemove = () => {
+
+    }
+
+    return (
+        <View >
+            <Image 
+            style={styles.img}
+            source={{
+                uri: 'https://reactnative.dev/img/tiny_logo.png',
+            }}/>
+            <View style={styles.container}>
+                <View style={styles.allText}>
+                    <Text style={styles.text}> Age: {cat.age} </Text>
+                    <Text style={styles.text}> Added by user: {cat.contact.username} </Text>
+                    <Text style={styles.text}> Phone number: {cat.contact?.phone ? cat.contact.phone : "-"} </Text>
+                    <Text style={styles.text}> Email: {cat.contact?.emailAddress ? cat.contact.emailAddress : "-"} </Text>
+                    <Text style={[styles.text, styles.description]}> Description: {cat?.descriptions ? cat.descriptions : "-" } </Text>
+                </View>
+                <View style={styles.buttons}>
+                    <Button title="Update info" style={styles.bAdd} onPress={handleUpdate}/>
+                    <Button title="Remove item" style={styles.bAdd} onPress={handleRemove}/>
+                </View>
+            </View>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 30,
+    padding: 20,
     backgroundColor: '#EAEDED',
     height: '100%',
   },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10, 
+  },
+  img: {
+      height: "35%"
+  },
+  text: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  allText: {
+    marginBottom: 20,
+  },
+  buttons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center', 
+  },
+  description: {
+      height: 120,
+  }
 });
