@@ -17,25 +17,20 @@ export default function CatsScreen(props) {
         })
     }, []);
 
+    const handleCats = () => {
+        props.navigation.navigate('Cats'); 
+    };
+
     const handleAddCat = () => {
         props.navigation.navigate('CreateCat'); 
-        // setCats(cats => [...cats, cat]);
-        // console.log(JSON.stringify(cats));
     };
 
     const handleUser = () => {
         props.navigation.navigate('User'); 
-        // setCats(cats => [...cats, cat]);
-        // console.log(JSON.stringify(cats));
     };
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.groupone}>
-                {/* <TextInput style={styles.iAdd} placeholder="Insert a cat" value={cat} onChangeText={(cat) => { setInfo(cat) } }/> */}
-                {/* <Button title="MODIFY" style={styles.bAdd} onPress={handleUser}/>
-                <Button title="ADD" style={styles.bAdd} onPress={handleAddCat}/> */}
-            </View>
             <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
                 {/* <View style={styles.container}> */}
                     <View style={styles.containerElements}>
@@ -46,13 +41,13 @@ export default function CatsScreen(props) {
                 {/* </View> */}
             </ScrollView>
             <View style={styles.navbar}>
-                <Pressable onPress={() => {}} style={styles.btn} android_ripple={{borderless: false}}>
+                <Pressable onPress={handleCats} style={styles.btn} android_ripple={{borderless: false}}>
                     <Icon name="cat" group="miscellaneous" height={iconHeight} width={iconWidth} color="#377A8A" />
                 </Pressable>
-                <Pressable onPress={() => {}} style={styles.addBtn} android_ripple={{borderless: false}}>
+                <Pressable onPress={handleAddCat} style={styles.addBtn} android_ripple={{borderless: false}}>
                     <Icon name="add-button-inside-black-circle" group="material-design" height={iconHeight} width={iconWidth} color="white" />
                 </Pressable>
-                <Pressable onPress={() => {}} style={styles.btn} android_ripple={{borderless: false}}>
+                <Pressable onPress={handleUser} style={styles.btn} android_ripple={{borderless: false}}>
                     <Icon name="user" group="miscellaneous" height={iconHeight} width={iconWidth} color="#377A8A" />
                 </Pressable>
             </View>
@@ -65,19 +60,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#EAEDED',
         height: '100%',
         flex: 1,
-        // paddingTop: StatusBar.currentHeight,
     },
     scrollView: {
         backgroundColor: '#EAEDED',
         margin: 20,
-        // marginHorizontal: 20,
+        flex: 1
     },
-    // groupone: {
-    //     flexDirection: 'row',
-    //     justifyContent: 'space-between',
-    //     alignItems: 'center',
-    //     marginBottom: 20,
-    // },
     iAdd: {
         marginBottom: 10,
         borderBottomWidth: 0.5,
@@ -106,8 +94,6 @@ const styles = StyleSheet.create({
         width: "35%",
         alignItems: "center",
         justifyContent: 'center',
-        // borderColor: "grey",
-        // borderWidth: 1,
     },
     addBtn: {
         height: "100%",
