@@ -16,4 +16,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#EAEDED',
     height: '100%',
   },
+  scrollView: {
+    backgroundColor: '#EAEDED',
+} ,
 });

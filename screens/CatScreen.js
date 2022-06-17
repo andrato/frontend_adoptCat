@@ -23,7 +23,7 @@ export default function CatScreen({route, navigation}) {
             <View style={styles.container}>
                 <View style={styles.allText}>
                     <Text style={styles.text}> Age: {cat.age} </Text>
-                    <Text style={styles.text}> Added by user: {cat.contact.username} </Text>
+                    <Text style={styles.text}> Added by user: {cat.contact?.username ? cat.contact.phone : "-"} </Text>
                     <Text style={styles.text}> Phone number: {cat.contact?.phone ? cat.contact.phone : "-"} </Text>
                     <Text style={styles.text}> Email: {cat.contact?.emailAddress ? cat.contact.emailAddress : "-"} </Text>
                     <Text style={[styles.text, styles.description]}> Description: {cat?.descriptions ? cat.descriptions : "-" } </Text>

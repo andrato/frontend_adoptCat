@@ -40,11 +40,11 @@ const styles = StyleSheet.create({
         shadowColor: "black",
         shadowOffset: {
         width: 0,
-        height: 100,
+        height: 1,
         },
-        shadowOpacity: 50,
-        shadowRadius: 100,
-        elevation: 20,
+        shadowOpacity: 1,
+        shadowRadius: 1,
+        elevation: 3,
     },
     eImage: {
         width: 120,

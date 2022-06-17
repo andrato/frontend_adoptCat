@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Button } from 'react-native';
+import { StyleSheet, View, Button, StatusBar, SafeAreaView, ScrollView } from 'react-native';
 import CatComponent from '../components/CatComponent';
 import CatsService from '../services/CatsService';
 
@@ -27,19 +27,27 @@ export default function CatsScreen(props) {
     };
 
     return (
-        <View style={styles.container}>
-        <View style={styles.groupone}>
-            {/* <TextInput style={styles.iAdd} placeholder="Insert a cat" value={cat} onChangeText={(cat) => { setInfo(cat) } }/> */}
-            <Button title="MODIFY" style={styles.bAdd} onPress={handleUser}/>
-            <Button title="ADD" style={styles.bAdd} onPress={handleAddCat}/>
-        </View>
-
-        <View style={styles.containerElements}>
-            { cats.map((elem) => {
-            return <CatComponent cat={elem} navigation={props.navigation} id={elem._id} key={elem._id}/>
-            }) }
-        </View>
-        </View>
+        <SafeAreaView style={styles.container}>
+            <View style={styles.groupone}>
+                {/* <TextInput style={styles.iAdd} placeholder="Insert a cat" value={cat} onChangeText={(cat) => { setInfo(cat) } }/> */}
+                {/* <Button title="MODIFY" style={styles.bAdd} onPress={handleUser}/>
+                <Button title="ADD" style={styles.bAdd} onPress={handleAddCat}/> */}
+            </View>
+            <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+                {/* <View style={styles.container}> */}
+                    <View style={styles.containerElements}>
+                        { cats.map((elem) => {
+                        return <CatComponent cat={elem} navigation={props.navigation} id={elem._id} key={elem._id}/>
+                        }) }
+                    </View>
+                {/* </View> */}
+            </ScrollView>
+            <View style={styles.grouptwo}>
+                {/* <TextInput style={styles.iAdd} placeholder="Insert a cat" value={cat} onChangeText={(cat) => { setInfo(cat) } }/> */}
+                {/* <Button title="MODIFY" style={styles.bAdd} onPress={handleUser}/>
+                <Button title="ADD" style={styles.bAdd} onPress={handleAddCat}/> */}
+            </View>
+        </SafeAreaView>
     );
 }
 
@@ -48,12 +56,25 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: '#EAEDED',
         height: '100%',
+        flex: 1,
+        // paddingTop: StatusBar.currentHeight,
     },
-    groupone: {
+    scrollView: {
+        backgroundColor: '#EAEDED',
+        // marginHorizontal: 20,
+    },
+    // groupone: {
+    //     flexDirection: 'row',
+    //     justifyContent: 'space-between',
+    //     alignItems: 'center',
+    //     marginBottom: 20,
+    // },
+    grouptwo: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 20,
+        marginBottom: 0,
+        height: 50,
     },
     iAdd: {
         marginBottom: 10,
@@ -70,4 +91,5 @@ const styles = StyleSheet.create({
     containerElements: {
         flexDirection: 'column'
     },
+
 });
