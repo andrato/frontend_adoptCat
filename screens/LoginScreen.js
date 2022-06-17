@@ -2,10 +2,44 @@ import React from 'react';
 import { StyleSheet, TextInput, View, ScrollView, Button, Image, ImageBackground, Text, TouchableOpacity, Alert } from 'react-native';
 import KeyboardAvoidingView from 'react-native/Libraries/Components/Keyboard/KeyboardAvoidingView';
 import { auth } from '../firebase.js';
+import * as Google from 'expo-auth-session/providers/google';
+import * as WebBrowser from 'expo-web-browser';
+import * as Facebook from 'expo-facebook';
+
+// allow your auth to take place and return the results here
+WebBrowser.maybeCompleteAuthSession();
 
 export default function LoginScreen(props) {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
+
+    // pentru google/facebook
+    const [accessToken, setAccessToken] = React.useState('');
+    const [userInfo, setUserInfo] = React.useState('');
+    const [request, response, promptAsync] = Google.useAuthRequest({
+        iosClientId: '925572156682-i4pcuhggs2th28qblotveagcg548jsgm.apps.googleusercontent.com',
+        androidClientId: '925572156682-kguc1dogcr3q1162ddp2s0u9e3o9s25e.apps.googleusercontent.com',
+        expoClientId: '925572156682-aalkfp61l4h0u7a4tn82ip3sg4m362nm.apps.googleusercontent.com'
+    });
+ 
+    React.useEffect(() => {
+        if(response?.type === "success") {
+            setAccessToken(response.authentication.accessToken)
+            props.navigation.navigate("Cats");
+        }
+    }, [response])
+
+
+    async function getUserData() {
+        let userInfoResponse = await fetch("https://www.googleapis.com/userinfo/v2/me", {
+            headers: { Authorization: `Bearer ${accessToken}`}
+        });
+
+        userInfoResponse.json().then(data => {
+            setUserInfo(data);
+        });
+    }
+
 
     // add a listner
     React.useEffect(() => {
@@ -50,6 +84,39 @@ export default function LoginScreen(props) {
         })
     }
 
+    const handleGoogleLogin = () => {
+        // if(accessToken) {
+        //     console.log("pe cazul fericit");
+        //     getUserData();
+        // } else { 
+        //     console.log("pe cazul nefericit");
+        //     promptAsync({useProxy: false, showInRecents: true}) 
+        // }
+        promptAsync();
+    }
+
+    const handleFacebookLogin = async () => {
+        try {
+            await Facebook.initializeAsync({
+            appId: '551902369897499',
+            });
+            const { type, token, expirationDate, permissions, declinedPermissions } =
+            await Facebook.logInWithReadPermissionsAsync({
+                permissions: ['public_profile', 'email'],
+            });
+            if (type === 'success') {
+                // Get the user's name using Facebook's Graph API
+                const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+                Alert.alert('Logged in!', `Hi ${(await response.json()).name}!`);
+            } else {
+            // type === 'cancel'
+            }
+        } catch (err) {
+            alert(`Facebook Login Error: ${err}`);
+        }
+    }
+
+
     return (
         <KeyboardAvoidingView style={styles.container} behaviour="padding">
             <View style={styles.secondPart}>
@@ -66,9 +133,16 @@ export default function LoginScreen(props) {
                 </TouchableOpacity>
             </View>
             <View style={styles.thirdPart}>
-
+                <View style={styles.socials}>
+                    <TouchableOpacity style={styles.bSocialG} onPress={handleGoogleLogin}>
+                        <Text style={styles.textSocials}>{accessToken ? 'Loaded' : 'Google'}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.bSocialF} onPress={handleFacebookLogin}>
+                        <Text style={styles.textSocials}>Facebook</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-        </KeyboardAvoidingView>
+        </KeyboardAvoidingView> 
     );
 }
 
@@ -92,7 +166,7 @@ const styles = StyleSheet.create({
         height: '70%',
         width: '100%',
         padding: 30,
-        alignItems: 'center'
+        alignItems: 'center',
     },
     thirdPart:{
         height: '30%',
@@ -142,6 +216,32 @@ const styles = StyleSheet.create({
     },
     tSmall: {
         fontSize: 18,
-        color: "white"
+        color: "white",
+    },
+    bSocialG: {
+        backgroundColor: "#A93458",
+        width: "45%",
+        alignItems: "center",
+        justifyContent: "center",
+        height: 40,
+        borderRadius: 10,
+    },
+    bSocialF: {
+        backgroundColor: "#2A376B",
+        width: "45%",
+        alignItems: "center",
+        justifyContent: "center",
+        height: 40,
+        borderRadius: 10,
+    },
+    socials: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 10,
+        marginTop: 70,
+    },
+    textSocials: {
+        color: "white",
+        fontSize: 16,
     }
 });
