@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, TextInput, View, ScrollView, Button, Image, ImageBackground, Text, TouchableOpacity, Alert } from 'react-native';
 import KeyboardAvoidingView from 'react-native/Libraries/Components/Keyboard/KeyboardAvoidingView';
-import UserService from '../services/UserService';
 import { auth } from '../firebase.js';
 
 export default function LoginScreen(props) {
@@ -53,9 +52,6 @@ export default function LoginScreen(props) {
 
     return (
         <KeyboardAvoidingView style={styles.container} behaviour="padding">
-            {/* <View style={styles.firstPart}>
-                
-            </View> */}
             <View style={styles.secondPart}>
                 <Image source={require('../assets/cat.png')} style={styles.iCatLogin} />
                 <Text style={styles.tCatLogin}> Login </Text>
@@ -138,7 +134,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         height: 40,
         width: "100%",
-        backgroundColor: "#0C479D",
+        backgroundColor: "#A93458",
         color: 'black',
         alignItems: 'center',
         justifyContent: 'center',

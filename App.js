@@ -9,23 +9,10 @@ import CreateCatScreen from './screens/CreateCatScreen';
 import UserScreen from './screens/UserScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
-// import * as firebase from "firebase"; 
-
-// const firebaseConfig = {
-//   apiKey: "AIzaSyABM1-k-aogDWDtGOjImfcr_ZGbZyNaGF0",
-//   authDomain: "catadoption-f68aa.firebaseapp.com",
-//   projectId: "catadoption-f68aa",
-//   storageBucket: "catadoption-f68aa.appspot.com",
-//   messagingSenderId: "920978149364",
-//   appId: "1:920978149364:web:9a9cc712b35970b284f3a1"
-// };
-
-// // Initialize Firebase
-// firebase.initializeApp(firebaseConfig);
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
+export default function App(props) {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: true }}>

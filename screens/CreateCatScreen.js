@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, TextInput, Button, Image, Alert, SafeAreaView, ScrollView  } from 'react-native';
 import {requestMediaLibraryPermissionsAsync, launchImageLibraryAsync, MediaTypeOptions}  from 'expo-image-picker';
 import CatsService from '../services/CatsService';
+import { auth } from '../firebase.js';
+
 
 export default function CreateCatScreen(props) {
   const [galleryPermssion, setGalleryPermssion] = React.useState(false);
@@ -12,6 +14,10 @@ export default function CreateCatScreen(props) {
   const [description, setDescription] = React.useState(null);
 
   React.useEffect(() => {
+    if(!auth.currentUser) {
+      props.navigation.navigate('Login');
+    }
+
     (async () => {
       const galleryStatus = await requestMediaLibraryPermissionsAsync();
       setGalleryPermssion(galleryStatus.status === 'granted');
@@ -46,6 +52,7 @@ export default function CreateCatScreen(props) {
     const obj = {
       name: postName,
       age: Number(age),
+      user_id: auth.currentUser.email,
     }
 
     if(description) {
@@ -58,6 +65,8 @@ export default function CreateCatScreen(props) {
       if(!res.data.error) {
         id = res.data.response._id;
       }
+
+      console.log()
     } catch (err) {
       Alert.alert("An error occured! Please try again later!");
       console.log(err);

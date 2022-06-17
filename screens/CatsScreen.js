@@ -11,7 +11,11 @@ export default function CatsScreen(props) {
 
     React.useEffect(() => { 
         CatsService.getCats().then((response) => {
-            setCats(response.data.cats);
+            const catsResp = response.data.cats;
+            catsResp.sort((a, b) => {
+                return a.date < b.date;
+            });
+            setCats(catsResp);
         }).catch((err) => {
         console.log(JSON.stringify(err))
         })

@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 1,
         shadowRadius: 1,
-        elevation: 3,
+        elevation: 2,
     },
     eImage: {
         width: 120,
