@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions, Button, Image } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, Button, Image } from 'react-native';
 import CatsService from '../services/CatsService';
 
 export default function CatScreen({route, navigation}) {
@@ -14,7 +14,7 @@ export default function CatScreen({route, navigation}) {
     }
 
     return (
-        <View >
+        <ScrollView keyboardShouldPersistTaps="always">
             <Image 
             style={styles.img}
             source={{
@@ -33,7 +33,7 @@ export default function CatScreen({route, navigation}) {
                     <Button title="Remove item" style={styles.bAdd} onPress={handleRemove}/>
                 </View>
             </View>
-        </View>
+        </ScrollView>
     );
 }
 

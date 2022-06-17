@@ -11,6 +11,7 @@ class CatsService {
     }
 
     addCat(objCat) {
+        console.log(objCat)
         return axios.post(body + `/create`, objCat);
     }
 
