@@ -10,10 +10,14 @@ import CreateCatScreen from './screens/CreateCatScreen';
 import UserScreen from './screens/UserScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import { AppContextProvider } from './global/AppContextProvider';
+
+
 
 const Stack = createNativeStackNavigator();
 export default function App() {
       return (
+        <AppContextProvider>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: true }}>
             <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
@@ -25,6 +29,7 @@ export default function App() {
             <Stack.Screen name="User" component={UserScreen} />
           </Stack.Navigator> 
         </NavigationContainer>
+        </AppContextProvider>
       );
 };
 

@@ -3,34 +3,35 @@ import { StyleSheet, Text, View, Image, TouchableHighlight } from 'react-native'
 import CatsService from '../services/CatsService';
 import Animated from 'react-native-reanimated';
 
-export default function CatComponent({cat, scale, navigation, id}) {
-  const onNavigateCat = () => {
-    navigation.navigate({name: 'Cat', params: {cat: cat}, merge: true});
-  }
+export default function CatComponent(props) {
 
-  console.log("component scale is: " + Object.values(scale)[0]);
-  const scaleC = Number(scale);
+    const onNavigateCat = () => {
+        props.navigation.navigate({name: 'Cat', params: {cat: cat}, merge: true});
+    }
 
-  return (
-    <Animated.View onPress={onNavigateCat} underlayColor="white" key={id} style={{
-                transform: [{scaleC}]
-            }}>
-        <View style={styles.element}>
-            <View>
-            <Image 
-            style={styles.eImage}
-            source={{
-                uri: 'https://reactnative.dev/img/tiny_logo.png',
-            }}/>
+    console.log("component scale is: " + Object.values(scale)[0]);
+    const scaleC = Number(scale);
+
+    return (
+        <Animated.View onPress={onNavigateCat} underlayColor="white" key={id} style={{
+                    transform: [{scale}]
+                }}>
+            <View style={styles.element}>
+                <View>
+                <Image 
+                style={styles.eImage}
+                source={{
+                    uri: 'https://reactnative.dev/img/tiny_logo.png',
+                }}/>
+                </View>
+                <View style={styles.eInfo}>
+                    <Text style={styles.eTitle}>{cat.name}</Text>
+                    <Text >Age: {cat.age}</Text>
+                    <Text >Contact: {cat.contact?.phone ? cat.contact?.phone : cat.contact?.emailAddress}</Text>
+                </View>
             </View>
-            <View style={styles.eInfo}>
-            <Text style={styles.eTitle}>{cat.name}</Text>
-            <Text >Age: {cat.age}</Text>
-            <Text >Contact: {cat.contact?.phone ? cat.contact?.phone : cat.contact?.emailAddress}</Text>
-            </View>
-        </View>
-    </Animated.View>
-  );
+        </Animated.View>
+    );
 }
 
 const styles = StyleSheet.create({

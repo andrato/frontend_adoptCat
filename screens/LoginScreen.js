@@ -5,6 +5,7 @@ import { auth } from '../firebase.js';
 import * as Google from 'expo-auth-session/providers/google';
 import * as WebBrowser from 'expo-web-browser';
 import * as Facebook from 'expo-facebook';
+import { AppContext } from '../global/AppContextProvider';
 
 // allow your auth to take place and return the results here
 WebBrowser.maybeCompleteAuthSession();
@@ -12,6 +13,12 @@ WebBrowser.maybeCompleteAuthSession();
 export default function LoginScreen(props) {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
+
+    const {
+        userEmail,
+        setUserEmail
+    } = React.useContext(AppContext);
+
 
     // pentru google/facebook
     const [accessToken, setAccessToken] = React.useState('');
@@ -26,7 +33,12 @@ export default function LoginScreen(props) {
         if(response?.type === "success") {
             setAccessToken(response.authentication.accessToken)
             props.navigation.navigate("Cats");
+            setUserEmail("ceva@google.com");
         }
+
+        if(userEmail !== "") {
+            props.navigation.navigate("Cats");
+        } 
     }, [response])
 
 
@@ -44,6 +56,7 @@ export default function LoginScreen(props) {
     // add a listner
     React.useEffect(() => {
         if(auth.currentUser) {
+            setUserEmail(auth.email);
             props.navigation.navigate("Cats");
         }
 
@@ -61,8 +74,9 @@ export default function LoginScreen(props) {
         .createUserWithEmailAndPassword(email, password)
         .then(userCredentials => {
             const user = userCredentials.user;
-            console.log("Registered " + user);
+            console.log("Registered " + JSON.stringify(user));
             Alert.alert("Successfully registered!");
+            setUserEmail(user.email);
         })
         .catch(err => { 
             Alert.alert("Error on register: " + err.message);
@@ -77,6 +91,7 @@ export default function LoginScreen(props) {
             const user = userCredentials.user;
             console.log("Logged in with " + user.email);
             props.navigation.navigate("Cats");
+            setUserEmail(user.email);
         })
         .catch(err => { 
             Alert.alert("Error on login: " + err.message);
@@ -135,7 +150,7 @@ export default function LoginScreen(props) {
             <View style={styles.thirdPart}>
                 <View style={styles.socials}>
                     <TouchableOpacity style={styles.bSocialG} onPress={handleGoogleLogin}>
-                        <Text style={styles.textSocials}>{accessToken ? 'Loaded' : 'Google'}</Text>
+                        <Text style={styles.textSocials}>Google</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.bSocialF} onPress={handleFacebookLogin}>
                         <Text style={styles.textSocials}>Facebook</Text>

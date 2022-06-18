@@ -5,7 +5,6 @@ import CatComponent from '../components/CatComponent';
 import CatsService from '../services/CatsService';
 import Icon from 'react-native-ico';
 import { FlatList } from 'react-native-gesture-handler';
-// import Animated from 'react-native-reanimated';
 
 
 export default function CatsScreen(props) {
@@ -23,7 +22,6 @@ export default function CatsScreen(props) {
                 return a.date < b.date;
             });
             setCats(catsResp);
-            console.log(response.data.cats);
         }).catch((err) => {
         console.log(JSON.stringify(err))
         })
@@ -87,7 +85,7 @@ export default function CatsScreen(props) {
 
                     // return (<CatComponent cat={item} scale={scale} navigation={props.navigation} id={item._id} key={item._id}/>)
                     return (
-                        <AnimatedTouchable onPress={() => {onNavigateCat(item)}} underlayColor="white" key={id} style={{
+                        <AnimatedTouchable onPress={() => {onNavigateCat(item)}} underlayColor="white" key={item._id} style={{
                             transform: [{scale}]
                         }}>
                             <View style={styles.element}>

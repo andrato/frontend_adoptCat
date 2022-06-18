@@ -3,6 +3,7 @@ import { StyleSheet, Text, TextInput, Button, Image, Alert, SafeAreaView, Scroll
 import {requestMediaLibraryPermissionsAsync, launchImageLibraryAsync, MediaTypeOptions}  from 'expo-image-picker';
 import CatsService from '../services/CatsService';
 import { auth } from '../firebase.js';
+import { AppContext } from '../global/AppContextProvider.js';
 
 
 export default function CreateCatScreen(props) {
@@ -13,8 +14,12 @@ export default function CreateCatScreen(props) {
   const [age, setAge] = React.useState(null);
   const [description, setDescription] = React.useState(null);
 
+  const {
+    userEmail,
+  } = React.useContext(AppContext);
+
   React.useEffect(() => {
-    if(!auth.currentUser) {
+    if(!auth.currentUser && userEmail == "") {
       props.navigation.navigate('Login');
     }
 
@@ -52,7 +57,7 @@ export default function CreateCatScreen(props) {
     const obj = {
       name: postName,
       age: Number(age),
-      user_id: auth.currentUser.email,
+      user_id: userEmail,
     }
 
     if(description) {

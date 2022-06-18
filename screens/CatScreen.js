@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, Button, Image } from 'react-native';
 import CatsService from '../services/CatsService';
+import { auth } from '../firebase.js';
 
 export default function CatScreen({route, navigation}) {
     const [cat, setCat] = React.useState(route.params.cat);
@@ -10,7 +11,7 @@ export default function CatScreen({route, navigation}) {
     }
 
     const handleRemove = () => {
-
+      
     }
 
     return (
@@ -23,9 +24,9 @@ export default function CatScreen({route, navigation}) {
             <View style={styles.container}>
                 <View style={styles.allText} >
                     <Text style={styles.text}> Age: {cat.age} </Text>
-                    <Text style={styles.text}> Added by user: {cat.contact?.username ? cat.contact.phone : "-"} </Text>
+                    <Text style={styles.text}> Added by user: {cat.user_id ? cat.user_id : "-"} </Text>
                     <Text style={styles.text}> Phone number: {cat.contact?.phone ? cat.contact.phone : "-"} </Text>
-                    <Text style={styles.text}> Email: {cat.contact?.emailAddress ? cat.contact.emailAddress : "-"} </Text>
+                    <Text style={styles.text}> Email: {cat.user_id ? cat.user_id : "-"} </Text>
                     <Text style={[styles.text, styles.description]}> Description: {cat?.descriptions ? cat.descriptions : "-" } </Text>
                 </View>
                 <View style={styles.buttons}>

@@ -2,17 +2,32 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, Pressable, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-ico';
 import { auth } from '../firebase.js';
+import { AppContext } from '../global/AppContextProvider.js';
 
 export default function UserScreen(props) {
     const [user, setUser] = React.useState('');
     const iconHeight = 30;
     const iconWidth = 30;
 
+    const {
+      userEmail,
+      setUserEmail
+    } = React.useContext(AppContext);
+
     React.useEffect(() => { 
       if(!auth.currentUser) {
-        props.navigation.navigate('Login');
+        if(!userEmail) {
+          props.navigation.navigate('Login');
+        } else {
+          const usr = {
+            email: userEmail
+          }
+          setUser(usr);
+        }
+      } else {
+        setUser(auth.currentUser);
       }
-      setUser(auth.currentUser);
+      
     }, []);
 
     const handleCats = () => {
@@ -28,14 +43,18 @@ export default function UserScreen(props) {
     };
 
     const handleLogout = () => {
-        auth
-        .signOut()
-        .then(() => {
-          props.navigation.navigate('Login');
-        })
-        .catch(error => {
-          Alert.alert(error.message);
-        })
+        setUserEmail("");
+
+        if(auth.currentUser) {
+          auth
+          .signOut()
+          .then(() => {
+            props.navigation.navigate('Login');
+          })
+          .catch(error => {
+            Alert.alert(error.message);
+          })
+        }
     };
 
     return (
