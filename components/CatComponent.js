@@ -1,14 +1,20 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableHighlight } from 'react-native';
 import CatsService from '../services/CatsService';
+import Animated from 'react-native-reanimated';
 
-export default function CatComponent({cat, navigation, id}) {
+export default function CatComponent({cat, scale, navigation, id}) {
   const onNavigateCat = () => {
     navigation.navigate({name: 'Cat', params: {cat: cat}, merge: true});
   }
 
+  console.log("component scale is: " + Object.values(scale)[0]);
+  const scaleC = Number(scale);
+
   return (
-    <TouchableHighlight onPress={onNavigateCat} underlayColor="white" key={id}>
+    <Animated.View onPress={onNavigateCat} underlayColor="white" key={id} style={{
+                transform: [{scaleC}]
+            }}>
         <View style={styles.element}>
             <View>
             <Image 
@@ -23,7 +29,7 @@ export default function CatComponent({cat, navigation, id}) {
             <Text >Contact: {cat.contact?.phone ? cat.contact?.phone : cat.contact?.emailAddress}</Text>
             </View>
         </View>
-    </TouchableHighlight>
+    </Animated.View>
   );
 }
 

@@ -14,14 +14,14 @@ export default function CatScreen({route, navigation}) {
     }
 
     return (
-        <ScrollView keyboardShouldPersistTaps="always">
+        <ScrollView keyboardShouldPersistTaps="always" style={styles.containerAll}>
             <Image 
             style={styles.img}
             source={{
                 uri: 'https://reactnative.dev/img/tiny_logo.png',
             }}/>
             <View style={styles.container}>
-                <View style={styles.allText}>
+                <View style={styles.allText} >
                     <Text style={styles.text}> Age: {cat.age} </Text>
                     <Text style={styles.text}> Added by user: {cat.contact?.username ? cat.contact.phone : "-"} </Text>
                     <Text style={styles.text}> Phone number: {cat.contact?.phone ? cat.contact.phone : "-"} </Text>
@@ -38,10 +38,12 @@ export default function CatScreen({route, navigation}) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
+  containerAll: {
     backgroundColor: '#EAEDED',
     height: '100%',
+  },
+  container: {
+    padding: 20,
   },
   title: {
     fontSize: 20,
@@ -49,7 +51,7 @@ const styles = StyleSheet.create({
     marginBottom: 10, 
   },
   img: {
-      height: "35%"
+      height: 300
   },
   text: {
     fontSize: 16,
