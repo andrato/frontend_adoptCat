@@ -1,4 +1,5 @@
-# App info
+# frontend_adoptCat
+## App info
 Mobile app for university project:
 - navigation
 - firebase for login and register
@@ -6,7 +7,7 @@ Mobile app for university project:
 - list animation
 - REST api (backend: https://github.com/andrato/backend_adoptCat)
 
-# App presentation
+## App presentation
 ![](images/app.gif)
 
-# frontend_adoptCat
+
