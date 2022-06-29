@@ -24,15 +24,17 @@ export default function LoginScreen(props) {
     const [accessToken, setAccessToken] = React.useState('');
     const [userInfo, setUserInfo] = React.useState('');
     const [request, response, promptAsync] = Google.useAuthRequest({
-        iosClientId: '925572156682-i4pcuhggs2th28qblotveagcg548jsgm.apps.googleusercontent.com',
-        androidClientId: '925572156682-kguc1dogcr3q1162ddp2s0u9e3o9s25e.apps.googleusercontent.com',
-        expoClientId: '925572156682-aalkfp61l4h0u7a4tn82ip3sg4m362nm.apps.googleusercontent.com'
+        iosClientId: '<ios_client_id>',
+        androidClientId: '<android_client_id>',
+        expoClientId: '<expo_client_id>'
     });
  
     React.useEffect(() => {
         if(response?.type === "success") {
             setAccessToken(response.authentication.accessToken)
             props.navigation.navigate("Cats");
+
+            // TODO: replace with user info got from google
             setUserEmail("ceva@google.com");
         }
 
@@ -113,7 +115,7 @@ export default function LoginScreen(props) {
     const handleFacebookLogin = async () => {
         try {
             await Facebook.initializeAsync({
-            appId: '551902369897499',
+            appId: '<app_id>',
             });
             const { type, token, expirationDate, permissions, declinedPermissions } =
             await Facebook.logInWithReadPermissionsAsync({
